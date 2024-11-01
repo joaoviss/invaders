@@ -1,4 +1,4 @@
-import { ctx, enemy } from "./consts.js";
+import { ctx, enemy, defaultText } from "./consts.js";
 
 export default class Enemy {
     #i = 0;
@@ -20,15 +20,12 @@ export default class Enemy {
             enemy.width, enemy.height,
             this.pos.x, this.pos.y, enemy.width, enemy.height
         );
-        //*
-        ctx.fillStyle = '#fff';
-        ctx.font = '10pt Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        let x = this.pos.x + enemy.width / 2,
-        y = this.pos.y + enemy.height / 2;
-        ctx.fillText(this.pos.x, x, y);
-        // */
+        defaultText();
+        ctx.fillText(
+            this.pos.x, 
+            this.pos.x + enemy.width / 2,
+            this.pos.y + enemy.height / 2
+        );
     }
     update(pos) {
         this.pos.x = pos.x + this.offset.x;

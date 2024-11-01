@@ -14,3 +14,9 @@ player = {
     width: player_image.width / 2,
     height: player_image.height
 }
+export function defaultText() {
+    ctx.fillStyle = '#fff';
+    ctx.font = '10pt Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'hanging';
+}

@@ -17,6 +17,6 @@ let loop = null;
 (function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);    
     player.update();
-    swarm.update();
+    // swarm.update();
     loop = requestAnimationFrame(animate);
 })();
