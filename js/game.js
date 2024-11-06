@@ -27,11 +27,19 @@ export default class Game {
                 this.animate();
             });
         }
-        // if ((this.swarm.out()) || (this.swarm.collision(this.player)))
+        if ((this.swarm.out()) || (this.swarm.collision(this.player)))
+            this.gameOver();
             // this.swarm.speed.x = 0;
             // this.lives--;
             // cancelAnimationFrame(this.loop);
         // }
+    }
+    gameOver() {
+        ctx.font = '40pt "Press Start 2p"';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = "orange";
+        ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2);
     }
     controlls() {
         if (goLeft) 

@@ -4,7 +4,7 @@ import Enemy from "./enemy.js";
 export default class Swarm {
     constructor(map) {
         this.pos = {x: 0, y: 0};
-        this.speed = {x: 3, y: 50};
+        this.speed = {x: 3, y: 5};
         this.enemies = map.map((col, c) => {
             return col.map((type, r) => {
                 return new Enemy(type, this.pos, {x: c, y: r});

@@ -12,10 +12,3 @@ let enemy_map = [
 let game = new Game(enemy_map);
 
 game.animate();
-
-ctx.save();
-ctx.font = '40pt "Press Start 2p"';
-ctx.textAlign = 'center';
-ctx.textBaseline = 'middle';
-ctx.fillStyle = "#ef3";
-ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2);

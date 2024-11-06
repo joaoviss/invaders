@@ -21,28 +21,13 @@ export function addEventListeners() {
         }
     });
     canvas.addEventListener('mousedown', ({offsetX}) => {
+        (offsetX < canvas.width / 2) ? goLeft = true : goRight = true;
         /* 
-        if (offsetX < canvas.width / 2) 
-            goLeft = true;
-        else 
-            goRight = true;
-        /*/
-        console.log(offsetX);
+        canvas.onMouseup(() => {
+            goLeft = goRight = false;
+        });
         // */
     });
-    /*
-    canvas.addEventListener('mouseup', (offsetX) => {
-        if (offsetX < canvas.width / 2) 
-            goLeft = false;
-        else
-            goRight = false;
-    });
-    /*/
-	canvas.addEventListener(`mouseup`, () => {
-        goLeft = false;
-        goRight = false;
-    });
-    // */
 }
 export function test(what) {
     addEventListener('keydown', ({code}) => {
