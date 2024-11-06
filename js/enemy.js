@@ -42,9 +42,9 @@ export default class Enemy {
     }
     collision(thing) {
         return (
-            (this.pos.x <= thing.pos.x + thing.width) &&
+            (this.pos.x <= thing.pos.x + thing.width / 2) &&
             (this.pos.y <= thing.pos.y + thing.height) &&
-            (this.pos.x + this.width >= thing.pos.x) &&
+            (this.pos.x + this.width >= thing.pos.x + thing.width / 2) &&
             (this.pos.y + this.height >= thing.pos.y)
         );
     }

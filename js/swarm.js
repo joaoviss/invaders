@@ -22,14 +22,14 @@ export default class Swarm {
     }
     update() {
         this.#reshape();
-        console.log(this.width);
+        // console.log(this.width, this.height);
         this.pos.x += this.speed.x;
         if (
             (this.pos.x < this.margin.left) || 
             (this.pos.x + this.width > this.margin.right)
         ) {
             this.speed.x *= -1;
-
+            this.pos.y + + this.speed.y;
             this.pos.y += this.speed.y;
         }
         this.draw();
@@ -46,12 +46,18 @@ export default class Swarm {
             }
         }
         try {
-            this.width = this.enemies.map(row => row.at(0).width)
+            this.width = this.enemies.map(col => col.at(0).width)
             .reduce((acc,cur) => acc + cur, 0);
+/* 
+            let lengths = this.enemies.map(col => {
+                return col.reduce((acc, cur) => acc + cur.height, 0);
+            })
+            this.height = Math.max(...lengths);
+//  */
         } catch (error) {}
     }
     collision(thing) {
-        return this.enemies.flat().some(e => this.collision(thing));
+        return this.enemies.flat().some(e => e.collision(thing));
     }
     out() {
         return this.enemies.flat().some(e => e.out());

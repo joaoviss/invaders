@@ -1,5 +1,5 @@
 import { canvas, ctx } from "./consts.js";
-import { goLeft, goRight, doShoot, addEventListeners } from "./controlls.js";
+import { goLeft, goRight, doShoot, addEventListeners, test } from "./controlls.js";
 import Bullet from "./bullet.js";
 import Swarm from "./swarm.js";
 import Player from "./player.js";
@@ -10,7 +10,7 @@ export default class Game {
         this.lives = 3;
         this.player = new Player();
         this.swarm = new Swarm(map);
-        this.test();
+        test(this);
         addEventListeners();
     }
     animate() {
@@ -18,15 +18,19 @@ export default class Game {
         ctx.clearRect(0, 0, canvas.width, canvas.height);    
         this.player.update();
         this.swarm.update();
+        if (this.swarm.collision(this.player)) {
+            this.swarm.speed.x = 0;
+            this.swarm.speed.y = 0;
+        }
         if (this.lives > 0) {
             this.loop = requestAnimationFrame(() => {
                 this.animate();
             });
         }
-        if ((this.swarm.out()) ||
-            this.swarm.collision(this.player))
+        // if ((this.swarm.out()) || (this.swarm.collision(this.player)))
+            // this.swarm.speed.x = 0;
             // this.lives--;
-            cancelAnimationFrame(this.loop);
+            // cancelAnimationFrame(this.loop);
         // }
     }
     controlls() {
@@ -41,13 +45,5 @@ export default class Game {
             });
             bullet.shoot();
         }
-    }
-    test() {
-        addEventListener('keydown', ({code}) => {
-            switch(code) {
-                case 'ControlLeft': this.swarm.enemies.at(0).pop(); break;
-                case 'ShiftLeft': this.swarm.enemies.at(-1).pop(); break;
-            }
-        });
     }
 }

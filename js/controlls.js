@@ -44,4 +44,11 @@ export function addEventListeners() {
     });
     // */
 }
-
+export function test(what) {
+    addEventListener('keydown', ({code}) => {
+        switch(code) {
+            case 'ControlLeft': what.swarm.enemies.at(0).pop(); break;
+            case 'ShiftLeft': what.swarm.enemies.at(-1).pop(); break;
+        }
+    });
+}
