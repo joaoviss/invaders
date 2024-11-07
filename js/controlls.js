@@ -6,6 +6,9 @@ goRight = false,
 doShoot = false;
 
 export function addEventListeners() {
+    // Adds listeners for the keys.
+
+    //  On press:
     addEventListener('keydown', ({code}) => {
         switch (code) {
             case 'Numpad4': goLeft = true; break;
@@ -13,6 +16,8 @@ export function addEventListeners() {
             case 'Space': doShoot = true; break;
         }
     });
+
+    //  On release:
     addEventListener('keyup', ({code}) => {
         switch (code) {
             case 'Numpad4': goLeft = false; break;
@@ -20,13 +25,17 @@ export function addEventListeners() {
             case 'Space': doShoot = false; break;
         }
     });
+
+    // Adds listeners for the mouse:
+    
+    //  On press (right or left side of the canvas):
     canvas.addEventListener('mousedown', ({offsetX}) => {
         (offsetX < canvas.width / 2) ? goLeft = true : goRight = true;
-        /* 
-        canvas.onMouseup(() => {
-            goLeft = goRight = false;
-        });
-        // */
+    });
+    
+    //  On release (any place the canvas):
+    canvas.addEventListener('mouseup', () => {
+        goLeft = goRight = false;
     });
 }
 export function test(what) {
@@ -36,4 +45,10 @@ export function test(what) {
             case 'ShiftLeft': what.swarm.enemies.at(-1).pop(); break;
         }
     });
+}
+export function controlls(player) {
+    if (goLeft) 
+        player.pos.x -= player.pos.x > 0 ? player.speed.x : 0;
+    if (goRight) 
+        player.pos.x += (player.pos.x + player.width < canvas.width) ? player.speed.x : 0;
 }
