@@ -29,12 +29,12 @@ export function addEventListeners() {
     // Adds listeners for the mouse:
     
     //  On press (right or left side of the canvas):
-    canvas.addEventListener('mousedown', ({offsetX}) => {
-        (offsetX < canvas.width / 2) ? goLeft = true : goRight = true;
+    addEventListener('touchstart', ({screenX}) => {
+        (screenX < screen.width / 2) ? goLeft = true : goRight = true;
     });
     
     //  On release (any place the canvas):
-    canvas.addEventListener('mouseup', () => {
+    addEventListener('touchend', () => {
         goLeft = goRight = false;
     });
 }
@@ -51,4 +51,6 @@ export function controlls(player) {
         player.pos.x -= player.pos.x > 0 ? player.speed.x : 0;
     if (goRight) 
         player.pos.x += (player.pos.x + player.width < canvas.width) ? player.speed.x : 0;
+    if (doShoot)
+        player.shoot();
 }

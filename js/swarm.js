@@ -4,7 +4,10 @@ import Enemy from "./enemy.js";
 export default class Swarm {
     constructor(map) {
         this.pos = {x: 0, y: 0};
-        this.speed = {x: 3, y: 5};
+        this.y = 0;
+        this.speed = {x: 1, y: 5, a: 5};
+        this.angle = 0;
+        this.curve = 20;
         this.enemies = map.map((col, c) => {
             return col.map((type, r) => {
                 return new Enemy(type, this.pos, {x: c, y: r});
@@ -22,16 +25,16 @@ export default class Swarm {
     }
     update() {
         this.#reshape();
-        // console.log(this.width, this.height);
         this.pos.x += this.speed.x;
         if (
             (this.pos.x < this.margin.left) || 
             (this.pos.x + this.width > this.margin.right)
         ) {
             this.speed.x *= -1;
-            this.pos.y + + this.speed.y;
-            this.pos.y += this.speed.y;
+            this.y += this.speed.y;
         }
+        this.pos.y = this.curve * Math.sin(this.angle * Math.PI/180) + this.y;
+        this.angle += this.speed.a;
         this.draw();
     }
     #reshape() {
