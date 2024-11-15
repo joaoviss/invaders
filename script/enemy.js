@@ -3,8 +3,11 @@ export default class Enemy {
     width = this.img.width / 2;
     height = this.img.height / 5;
     frame = 0;
+    i = 0;
+
     
-    constructor(ctx, type, pos) {
+    constructor(ctx, 
+        type, pos) {
         this.ctx = ctx;
         this.pos = pos;
         this.y = 0;
@@ -21,9 +24,19 @@ export default class Enemy {
             this.pos.x, this.pos.y,
             this.width, this.height
         );
+        this.ctx.fillStyle = 'white';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'hanging';
+        this.ctx.font = "10pt 'Press Start 2P'";
+        this.ctx.fillText(
+            this.type + 1, 
+            this.pos.x + this.width / 2, 
+            this.pos.y + this.height / 2
+        );
     }
     update() {
-        this.frame = this.frame == 0 ? 1 : 0;
+        if (++this.i % 25 === 0)
+            this.frame = this.frame == 0 ? 1 : 0;
         if ((this.pos.x <= 0) || (this.pos.x + this.width >= canvas.width)) {
             this.speed.x *= -1;
             this.speed.a = Math.random() * 5;

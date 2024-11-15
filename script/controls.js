@@ -1,6 +1,6 @@
 let goLeft = false,
 goRight = false,
-doShoot = true;
+doShoot = false;
 
 export function controls(target) {
     if (goLeft)
@@ -11,7 +11,7 @@ export function controls(target) {
         target.shoot();
 }
 
-export function addListeners() {
+export function addListeners(player) {
     addEventListener('keydown', ({code}) => {
         switch (code) {
             case 'Numpad4': goLeft = true; break;
@@ -22,4 +22,16 @@ export function addListeners() {
     addEventListener('keyup', () => {
             goLeft = goRight = doShoot = false;
     });
+    canvas.addEventListener('mousedown', ({offsetX}) => {
+        if (offsetX < player.pos.x + player.width / 2)
+            goLeft = true;
+        else
+            goRight = true;
+    });
+    /*
+    addEventListener('mousecancel', () => {
+        goLeft = goRight = false;
+    });
+    // */
 }
+
