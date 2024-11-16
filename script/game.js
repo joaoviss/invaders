@@ -19,7 +19,7 @@ export default class Game {
             });
             bulletController.draw();
             this.collision(bulletController, enemies);
-            // this.score();
+            this.score();
         }, 1000 / 60);
     }
     collision(bulletController, enemies) {
@@ -43,5 +43,6 @@ export default class Game {
         this.ctx.globalAlpha = 0.25;
         this.ctx.fillStyle = 'white';
         this.ctx.fillRect(0, canvas.height - 45, canvas.width, 45);
+        this.ctx.restore();
     }
 }
