@@ -1,7 +1,16 @@
+
 import Game from "./game.js";
 
 const ctx = canvas.getContext('2d');
 
-let game = new Game(ctx);
+let lives = 3;
 
-game.play();
+//*
+let game = new Game(ctx);
+game.play();    
+/*/ 
+while (lives > 0) {
+    let game = new Game(ctx);
+    game.play();    
+}
+//  */

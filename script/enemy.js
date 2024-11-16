@@ -11,7 +11,7 @@ export default class Enemy {
         this.ctx = ctx;
         this.pos = pos;
         this.y = 0;
-        this.speed = {x: Math.random() * 3, y: 10, a: Math.random() * 3};
+        this.speed = {x: Math.random() * 3, y: 20, a: Math.random() * 3};
         this.type = type;
         this.angle = 0;
         this.curve = Math.random() * 50 + 50; 
@@ -47,4 +47,5 @@ export default class Enemy {
         this.angle += this.speed.a;
         this.draw();
     }
+    out = () => this.pos.y + this.height >= canvas.height;
 }

@@ -5,37 +5,43 @@ import BulletController from "./bulletcontroller.js";
 export default class Game {
     constructor(ctx) {
         this.ctx = ctx;
-        this.bulletController = new BulletController(this.ctx);
-        this.player = new Player(this.bulletController, this.ctx, canvas.width / 2 );
-        this.enemies = Array.from({length: 15}, () => new Enemy(this.ctx, ~~(Math.random() * 5), {x: 10, y: 10}));
+        this.eBulletController = new BulletController(this.ctx, -5);
     }
     play() {
+        let bulletController = new BulletController(this.ctx, 5);
+        let player = new Player(this.ctx, bulletController, canvas.width / 2 );
+        let enemies = Array.from({length: 15}, () => new Enemy(this.ctx, ~~(Math.random() * 5), {x: 10, y: 10}));
         setInterval(() => {
             this.ctx.clearRect(0, 0, canvas.width, canvas.height);
-            this.player.draw();
-            this.enemies.forEach(enemy => {
+            player.draw();
+            enemies.forEach(enemy => {
                 enemy.update();
             });
-            this.bulletController.draw();
-            this.collision();
+            bulletController.draw();
+            this.collision(bulletController, enemies);
+            this.score();
         }, 1000 / 60);
     }
-    collision() {
-        this.bulletController.bullets.forEach(bullet => {
-            this.enemies.forEach(enemy => {
+    collision(bulletController, enemies) {
+        bulletController.bullets.forEach(bullet => {
+            enemies.forEach(enemy => {
                 if (bullet.hit(enemy)) {
-                    let bulletIndex = this.bulletController.bullets.indexOf(bullet);
-                    this.bulletController.bullets.splice(bulletIndex, 1);
-                    if (enemy.type > 0)
+                    let bulletIndex = bulletController.bullets.indexOf(bullet);
+                    bulletController.bullets.splice(bulletIndex, 1);
+                    if (enemy.type > 0) {
                         enemy.type--;
-                    else {
-                        let enemyIndex = this.enemies.indexOf(enemy);
-                        this.enemies.splice(enemyIndex, 1);
+                    } else {
+                        let enemyIndex = enemies.indexOf(enemy);
+                        enemies.splice(enemyIndex, 1);
                     }
-
-
                 }
            });
         });
+    }
+    score() {
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.25;
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillRect(0, canvas.height - 45, canvas.width, 45);
     }
 }

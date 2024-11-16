@@ -1,9 +1,9 @@
 export default class Bullet {   
-    speed = 5;
-    width = 3;
-    height = 5;
-    constructor(ctx, pos) {
+    width = 6;
+    height = 8
+    constructor(ctx, speed, pos) {
         this.ctx = ctx;
+        this.speed = speed;
         this.pos = pos;
     }
     draw() {

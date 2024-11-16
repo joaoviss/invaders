@@ -2,15 +2,16 @@ import Bullet from "./bullet.js";
 
 export default class BulletController {
     next = 0;
-    delay = 25;
+    delay = 60;
     bullets = [];
 
-    constructor(ctx) {
+    constructor(ctx, speed) {
         this.ctx = ctx;
+        this.speed = speed;
     }
     shoot(pos) {
        if (this.next <= 0) {
-            this.bullets.push(new Bullet(this.ctx, pos));
+            this.bullets.push(new Bullet(this.ctx,  this.speed, pos));
             this.next = this.delay;
         }
         this.next--;

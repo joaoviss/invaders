@@ -8,9 +8,9 @@ export default class Player {
     frame = 0;
     i = 0;
     
-    constructor(bulletController, ctx, x) {
+    constructor(ctx, bulletController, x) {
         this.ctx = ctx;
-        this.pos = {x: x, y: canvas.height - this.height - 20};
+        this.pos = {x: x, y: canvas.height - this.height - 50};
         this.bulletController = bulletController;
         addListeners(this);
     }

@@ -1,7 +1,6 @@
 let goLeft = false,
 goRight = false,
-doShoot = false;
-
+doShoot = true;
 export function controls(target) {
     if (goLeft)
         target.pos.x -= (target.pos.x - target.speed >= 0) ? target.speed : 0;
@@ -16,22 +15,19 @@ export function addListeners(player) {
         switch (code) {
             case 'Numpad4': goLeft = true; break;
             case 'Numpad6': goRight = true; break;
-            case 'Space': doShoot = true; break;
         }
     });
     addEventListener('keyup', () => {
-            goLeft = goRight = doShoot = false;
+        goLeft = goRight = false;
     });
-    canvas.addEventListener('mousedown', ({offsetX}) => {
-        if (offsetX < player.pos.x + player.width / 2)
+    canvas.addEventListener('touchstart', ({touches}) => {
+        if (touches[0].clientX < window.innerWidth / 2)
             goLeft = true;
         else
             goRight = true;
     });
-    /*
-    addEventListener('mousecancel', () => {
+    canvas.addEventListener('touchend', () => {
         goLeft = goRight = false;
-    });
-    // */
+    })
 }
 
