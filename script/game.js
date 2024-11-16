@@ -19,7 +19,7 @@ export default class Game {
             });
             bulletController.draw();
             this.collision(bulletController, enemies);
-            this.score();
+            // this.score();
         }, 1000 / 60);
     }
     collision(bulletController, enemies) {
