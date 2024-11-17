@@ -1,20 +1,21 @@
+import BulletController from "./bulletcontroller.js";
+
 export default class Enemy {
     img = document.querySelector('.enemy-sprite');
     width = this.img.width / 2;
     height = this.img.height / 5;
     frame = 0;
     i = 0;
-
+    speed = {x: Math.random() + 2, y: 20, a: Math.random() * 3};
+    angle = 0;
+    curve = Math.random() * 50 + 50; 
     
-    constructor(ctx, 
-        type, pos) {
+    constructor(ctx, type, pos) {
         this.ctx = ctx;
+        this.bulletController = new BulletController(this.ctx, -5)
+        this.type = type;
         this.pos = pos;
         this.y = 0;
-        this.speed = {x: Math.random() * 3, y: 20, a: Math.random() * 3};
-        this.type = type;
-        this.angle = 0;
-        this.curve = Math.random() * 50 + 50; 
     }
     draw() {
         this.ctx.drawImage(
@@ -47,5 +48,18 @@ export default class Enemy {
         this.angle += this.speed.a;
         this.draw();
     }
+
+    hit = (player) => (
+        (player.pos.x <= this.pos.x + this.width) ||
+        // (player.pos.y <= this.pos.y + this.height) ||
+        (player.pos.x + player.width > this.pos.x) &&
+        (player.pos.y + player.height > this.pos.y)
+    );
     out = () => this.pos.y + this.height >= canvas.height;
+    shoot() {
+        this.bulletController.shoot({
+            x: this.pos.x + this.width / 2, 
+            y: this.pos.y + this.height+ 5
+        });
+    }
 }

@@ -25,7 +25,7 @@ export default class Player {
             this.pos.x, this.pos.y,
             this.width, this.height
         );
-    }   
+    }
     shoot() {
         this.bulletController.shoot({
             x: this.pos.x + this.width / 2, 

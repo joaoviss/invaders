@@ -2,7 +2,7 @@ import Bullet from "./bullet.js";
 
 export default class BulletController {
     next = 0;
-    delay = 60;
+    delay = 80;
     bullets = [];
 
     constructor(ctx, speed) {

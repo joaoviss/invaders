@@ -11,7 +11,7 @@ body {
     align-items: center;
     padding: 5px;
     min-height: 100vh;
-    background-image: linear-gradient(45deg, #000, #ccF);
+    background-image: linear-gradient(45deg, #000000, rgb(95, 47, 4));
 }
 canvas {
     aspect-ratio: 4/3;
