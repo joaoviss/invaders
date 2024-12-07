@@ -7,7 +7,7 @@ export default class Bullet {
         this.color = color;
         this.radius = radius;
         this.speed = speed;
-        this.x = x - this.width /2;
+        this.x = x;
         this.y = y;
     }
     draw(ctx) {

@@ -50,18 +50,27 @@ export default class Game {
         });
     }
     display() {
-        this.ctx.globalAlpha = 1;
+        // this.ctx.globalAlpha = 1;
         this.ctx.textBaseline = 'middle';
         this.ctx.font = "15pt 'Press Start 2p'";
+
         this.ctx.save();
         this.ctx.globalAlpha = 0.3;
         this.ctx.fillStyle = 'white';
-        this.ctx.textAlign = 'left';
         this.ctx.fillRect(0, this.canvas.height - 50, this.canvas.width, this.canvas.height);
         this.ctx.restore();
+
         this.ctx.save();
+
+        // this.ctx.globalAlpha = 0.3;
+        this.ctx.fillStyle = 'white';
+        this.ctx.textAlign = 'left';
+        this.ctx.strokeRect(this.canvas.width /2 - 100, this.canvas.height - 35, 200, 20);
+        // this.ctx.restore();
+        
+        // this.ctx.save();
         this.ctx.fillStyle = 'black';
         this.ctx.fillText(this.player.getScore, 25, this.canvas.height - 25);
-        this.ctx.restore();
+        // this.ctx.restore();
     }
 }

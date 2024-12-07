@@ -24,9 +24,9 @@ export default class Enemy extends Ship {
         if ((this.x - this.radius < 0) || (this.x + this.radius > this.canvas.width))
             this.speed *= -1;
         this.x += this.speed;
-        super.draw(ctx);
         this.bulletController.reload(this.x, this.y + this.radius);
         this.printHealth(ctx);
+        super.draw(ctx);
     }
     printHealth(ctx) {
         let gradient = ctx.createLinearGradient(0, 0, 0, this.height);
