@@ -10,14 +10,20 @@ export default class Player extends Ship {
     width = this.img.width / 2;
     height = this.img.height;
     radius = this.img.width / 4;
+    left = false;
+    right = false;
     
     constructor(canvas, bulletController) {
         super(canvas, bulletController);
         this.x = canvas.width /2 - this.radius;
-        this.y = canvas.height - this.radius - 55;
+        this.y = canvas.height - this.radius - 55;+
         this.addListeners();
     }
     draw(ctx) {
+        if (this.left) 
+            this.x -= (this.x > 0) ? this.speed : 0;
+        if (this.right) 
+            this.x += (this.x < this.canvas.width) ? this.speed : 0;
         super.draw(ctx);
         if (this.trigger) this.shot();
     }
@@ -32,6 +38,17 @@ export default class Player extends Ship {
         addEventListener('keyup', ({code}) => {
             if (code == 'Space')
                 this.trigger = false;
+        });
+        canvas.addEventListener('touchstart', ({touches}) => {
+            if (touches[0].clientX < window.innerWidth / 2)
+                this.left = true;
+            else
+                this.right = true;
+        });
+        
+        this.canvas.addEventListener('touchend', () => {
+            this.left = false;
+            this.right = false;
         });
     }
     shot() {

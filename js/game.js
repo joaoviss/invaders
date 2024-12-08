@@ -25,9 +25,12 @@ export default class Game {
             this.playerBulletController.draw(this.ctx);
             this.enemyBulletController.draw(this.ctx);
             this.collision(this.player);
+            // this.collision([this.player, this.enemy]);
             this.display();
         }, 1000 / 60);
     }
+/*
+/*/
     collision(who) {
         let controller = who.bulletController;
         controller.bullets.forEach(bullet => {
@@ -36,21 +39,21 @@ export default class Game {
                 if (this.enemy.health > 1)
                     this.enemy.health--;
                 else {
-                    switch (who.constructor.name) {
-                        case 'Player':
-                            this.enemy = new Enemy(this.canvas, this.enemyBulletController, 5);
-                            this.player.score++;
-                        break;
-                        // case 'Enemy':
-                        //     this.player.
-                        // break;
-                    }
+                    this.enemy = new Enemy(this.canvas, this.enemyBulletController, 5);
+                    this.player.score++;
                 }
+                    // switch (who.constructor.name) {
+                    // case 'Player':
+                    //     break;
+                    //     case 'Enemy':
+                    //         this.player.health--;
+                    //     break;
+                    // }
             }
         });
     }
+// */
     display() {
-        // this.ctx.globalAlpha = 1;
         this.ctx.textBaseline = 'middle';
         this.ctx.font = "15pt 'Press Start 2p'";
 
@@ -62,15 +65,11 @@ export default class Game {
 
         this.ctx.save();
 
-        // this.ctx.globalAlpha = 0.3;
         this.ctx.fillStyle = 'white';
         this.ctx.textAlign = 'left';
-        this.ctx.strokeRect(this.canvas.width /2 - 100, this.canvas.height - 35, 200, 20);
-        // this.ctx.restore();
+        this.ctx.fillRect(this.canvas.width /2 - 50, this.canvas.height - 35, 200, 20);
         
-        // this.ctx.save();
         this.ctx.fillStyle = 'black';
         this.ctx.fillText(this.player.getScore, 25, this.canvas.height - 25);
-        // this.ctx.restore();
     }
 }
