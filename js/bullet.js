@@ -1,8 +1,5 @@
 export default class Bullet {
     
-    width = 5;
-    height = 5;
-    
     constructor(color, radius, speed, x, y) {
         this.color = color;
         this.radius = radius;
@@ -17,6 +14,8 @@ export default class Bullet {
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
     }
-    isOut = () => this.y <= -this.height;
+    isOut = () => this.y <= -this.radius * 2 || this.y >= canvas.height + this.radius * 2;
+
+    // Pitágoras :)
     hit = (that) => Math.hypot(this.x - that.x, this.y - that.y) <= this.radius + that.radius;
 }

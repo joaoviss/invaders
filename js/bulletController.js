@@ -16,11 +16,12 @@ export default class BulletController {
             bullet.draw(ctx);
         });
     }
-    reload(x, y) {
+    reload(ctx, x, y) {
         if (--this.next <= 0) {
-            this.bullets.push(new Bullet(this.color, 5, this.speed, x, y));
+            this.bullets.push(new Bullet(this.color, 3, this.speed, x, y));
             this.next = this.delay;
         }
+        this.draw(ctx);
     }
     erase(bullet) {
         let index = this.bullets.indexOf(bullet);
