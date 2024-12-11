@@ -30,7 +30,7 @@ export default class Game {
         }, 1000 / 60);
     }
     gameOver() {
-        this.ctx.globalAlpha(0.6);+
+        this.ctx.globalAlpha = 0.6;
         this.ctx.save();
         this.ctx.fillStyle = 'black';
         this.ctx.fillRect(0, 0, canvas.width, canvas.height);
