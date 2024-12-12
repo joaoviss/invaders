@@ -1,4 +1,5 @@
 import Ship from "./ship.js";
+import BulletController from "./bulletController.js";
 import { left, right, addListeners } from "./controlls.js";
 
 export default class Player extends Ship {
@@ -11,13 +12,11 @@ export default class Player extends Ship {
     height = this.img.height;
     radius = this.img.width / 4;
     
-    constructor(bulletController, lives, health) {
+    constructor(health = 5) {
         super();
-        this.bulletController = bulletController;
+        this.bulletController = new BulletController('orange', -3, 70)
         this.health = health;
-        this.lives = lives;
-        this.fullHealth = health;
-        this.x = canvas.width /2 - this.radius;
+        this.x = canvas.width / 2;
         this.y = canvas.height - this.radius - 55;
         addListeners();
     }
@@ -25,7 +24,7 @@ export default class Player extends Ship {
         if (left) 
             this.x -= (this.x > 0) ? this.speed : 0;
         if (right) 
-        this.x += (this.x < canvas.width) ? this.speed : 0;
+            this.x += (this.x < canvas.width) ? this.speed : 0;
         this.bulletController.reload(ctx, this.x, this.y - this.radius);
         super.draw(ctx);
     }

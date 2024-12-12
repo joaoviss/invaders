@@ -1,4 +1,5 @@
 import Ship from "./ship.js";
+import BulletController from "./bulletController.js";
 
 export default class Enemy extends Ship {
 
@@ -10,9 +11,9 @@ export default class Enemy extends Ship {
     angleSpeed = 0.3;
     curve = ~~(Math.random() * this.radius) + this.radius;
     
-    constructor(bulletController, health) {
+    constructor(health) {
         super();
-        this.bulletController = bulletController;
+        this.bulletController = new BulletController('red', 3, 30);
         this.health = health;
         this.fullHealth = health;
         this.x = (Math.random() - 0.5 > 0) ? 0 : canvas.width;
