@@ -8,22 +8,23 @@ export default class Enemy extends Ship {
     height = this.img.height;
     radius = this.img.width / 4;
     angle = 0;
-    angleSpeed = 0.3;
+    angleSpeed = 5;
     curve = ~~(Math.random() * this.radius) + this.radius;
     
-    constructor(health) {
+    constructor(health, points) {
         super();
         this.bulletController = new BulletController('red', 3, 30);
+        this.points = points;
         this.health = health;
         this.fullHealth = health;
-        this.x = (Math.random() - 0.5 > 0) ? 0 : canvas.width;
         this.speed = (Math.random() - 0.5 > 0) ? 3 : -3;
+        this.x = (Math.random() - 0.5 > 0) ? 0 : canvas.width;
         this.y = this.radius;
     }
     draw(ctx) {
         this.angle += this.angleSpeed;
-        // this.x += this.curve * Math.sin(this.angle * Math.PI / 180);
-        // this.y = this.curve * Math.cos(this.angle * Math.PI / 180);
+        // this.x1 = this.curve * Math.sin(this.angle * Math.PI / 180);
+        this.y = this.curve * Math.cos(this.angle * Math.PI / 180) + this.radius * 2;
         if ((this.x < 0) || (this.x > canvas.width))
             this.speed *= -1;
         this.x += this.speed;

@@ -1,16 +1,14 @@
+import Background from "./background.js";
 import Player from "./player.js";
 import Hud from "./hud.js";
 import Enemy from "./enemy.js";
-import BulletController from "./bulletController.js";
 
 export default class Game {
     
-    img = document.querySelector('.space');
-    
     constructor() {
         this.playerHealth = 5;
-        this.bgY = -canvas.height;
         this.ctx = canvas.getContext('2d');
+        this.background = new Background();
         this.player = new Player(this.playerHealth); 
         this.enemy = new Enemy(3);
         this.hud = new Hud(40, this.playerHealth);
@@ -20,10 +18,9 @@ export default class Game {
     play() {
         this.loop = setInterval(() => {
             this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            this.background.draw(this.ctx);
             this.collision(this.enemy);
             this.collision(this.player);
-            this.bgY += (this.bgY < 0) ? 1 : -canvas.height;
-            this.ctx.drawImage(this.img, 0, this.bgY, canvas.width, canvas.height * 2);
             this.player.draw(this.ctx);
             this.enemy.draw(this.ctx);
             this.hud.draw(this.ctx, this.score, this.player.health, this.lives);
