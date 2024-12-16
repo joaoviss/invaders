@@ -26,18 +26,18 @@ export default class Game {
             this.hud.draw(this.ctx, this.score, this.player.health, this.lives);
         }, 1000 / 60);
     }
-    gameOver() {
-        this.ctx.save();
-        this.ctx.globalAlpha = 0.8;
-        this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(0, 0, canvas.width, canvas.height);
-        this.ctx.restore();
-        this.ctx.fillStyle = 'red';
-        this.ctx.textBaseline = 'middle';
-        this.ctx.textAlign = 'center';
-        this.ctx.font = "30pt 'Press Start 2p'";-
-        this.ctx.fillText(`Game Over!`, canvas.width / 2, canvas.height  / 2);
-    }
+        gameOver() {
+            this.ctx.save();
+            this.ctx.globalAlpha = 0.8;
+            this.ctx.fillStyle = 'black';
+            this.ctx.fillRect(0, 0, canvas.width, canvas.height);
+            this.ctx.restore();
+            this.ctx.fillStyle = 'red';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.textAlign = 'center';
+            this.ctx.font = "30pt 'Press Start 2p'";-
+            this.ctx.fillText(`Game Over!`, canvas.width / 2, canvas.height  / 2);
+        }
     collision(who) {
         let controller = who.bulletController;
         controller.bullets.forEach(bullet => {

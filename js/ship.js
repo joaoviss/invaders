@@ -4,8 +4,6 @@ export default class Ship {
     frame = 0;
     
     draw(ctx) {
-        if (++this.i % 5 === 0)
-            this.frame = this.frame == 0 ? 1 : 0;
         ctx.drawImage(
             this.img,
             this.frame * this.width, 0,

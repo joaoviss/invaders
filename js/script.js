@@ -13,13 +13,12 @@ let ctx = canvas.getContext('2d');
 let background = new Background();
 let player = new Player(playerHealth); 
 let enemies = Array.from({length: 3}, () => new Enemy(enemyhealth, enemyPoints));
-let enemy = new Enemy(enemyhealth, enemyPoints);
 let hud = new Hud(40, playerHealth);
 let loop = null;
 
 function gameOver() {
     ctx.save();
-    ctx.globalAlpha = 0.8;
+    ctx.globalAlpha = 0.5;
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
@@ -30,7 +29,7 @@ function gameOver() {
     ctx.fillText(`Game Over!`, canvas.width / 2, canvas.height  / 2);
 }
 
-function collision(who) {
+function collision(who, enemy = null) {
     let controller = who.bulletController;
     controller.bullets.forEach(bullet => {
     switch (who.constructor.name) {
@@ -43,7 +42,8 @@ function collision(who) {
                     }
                 } else {
                     score += enemy.points;
-                    enemy = new Enemy(enemyhealth, enemyPoints);
+                    let index = enemies.indexOf(enemy);
+                    enemies.splice(index, 1);
                 }
             } else {
                 gameOver();
@@ -69,12 +69,18 @@ function collision(who) {
     loop = setInterval(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         background.draw(ctx);
-        collision(enemy);
-        collision(player);
+        hud.draw(ctx);
         player.draw(ctx);
-        enemy.draw(ctx);
-        hud.draw(ctx, score, player.health, lives);
+        enemies.forEach(enemy => {
+            enemy.draw(ctx);
+            collision(enemy);
+            collision(player, enemy);
+        });
+        hud.update(score, player.health, lives);
         if (player.health == 0)
             return true;
-    }, 1000 / 60);    
+        addEventListener('keydown', ({code}) => {
+            if (code == 'Space') player.explode();
+        });
+    }, 1000 / 60);
 })();

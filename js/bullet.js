@@ -14,7 +14,7 @@ export default class Bullet {
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
     }
-    isOut = () => this.y <= -this.radius * 2 || this.y >= canvas.height + this.radius * 2;
+    isOut = () => this.y <= -this.radius || this.y >= canvas.height + this.radius;
 
     // Pitágoras :)
     hit = (that) => Math.hypot(this.x - that.x, this.y - that.y) <= this.radius + that.radius;
