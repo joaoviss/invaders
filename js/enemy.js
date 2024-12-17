@@ -21,11 +21,11 @@ export default class Enemy extends Ship {
         this.points = points;
         this.health = health;
         this.fullHealth = health;
-        this.speed = Math.random() * 3 + 2;
+        this.speed = Math.random() * 4 + 2;
         this.speed *= (Math.random() - 0.5 > 0) ? 1 : -1;
         this.x = (Math.random() - 0.5 > 0) ? 0 : canvas.width;
         this.y = this.radius;
-        this.curve = ~~(Math.random() * this.radius) + this.radius * 2;
+        this.curve = 20//~~(Math.random() * this.radius) + this.radius * 2;
     }
     draw(ctx) {
         if (++this.i % 5 === 0)

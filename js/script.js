@@ -4,19 +4,23 @@ import Hud from "./hud.js";
 import Enemy from "./enemy.js";
 
 // const canvas = document.querySelector('#canvas');
-let playerHealth = 10;
+let playerHealth = 5;
 let enemyhealth = 3;
 let enemyPoints = 1;
 let score = 0;
 let lives = 3;
 let ctx = canvas.getContext('2d');
 let background = new Background();
-let player = new Player(playerHealth); 
-let enemies = Array.from({length: 3}, () => new Enemy(enemyhealth, enemyPoints));
+let enemies = null;
+let enemyCount = 1;
+let player = null;
 let hud = new Hud(40, playerHealth);
 let loop = null;
+let stage = 1;
+let count = 0;
+let lineSize = 30;
 
-function gameOver() {
+function printText(text) {
     ctx.save();
     ctx.globalAlpha = 0.5;
     ctx.fillStyle = 'black';
@@ -25,8 +29,14 @@ function gameOver() {
     ctx.fillStyle = 'red';
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
-    ctx.font = "30pt 'Press Start 2p'";-
-    ctx.fillText(`Game Over!`, canvas.width / 2, canvas.height  / 2);
+    text.forEach((phrase, index) => {
+        if (index !== 0)
+            lineSize = lineSize * 0.9;
+        ctx.font = `${lineSize}pt 'Press Start 2p'`;
+        ctx.fillText(phrase, canvas.width / 2, canvas.height / 2 + (lineSize + 20) * index);
+    });
+    clearInterval(loop);
+    addListeners();
 }
 
 function collision(who, enemy = null) {
@@ -44,28 +54,48 @@ function collision(who, enemy = null) {
                     score += enemy.points;
                     let index = enemies.indexOf(enemy);
                     enemies.splice(index, 1);
+                    if (enemies.length === 0) {
+                        printText(['Missão completa!', `${hud.format(score)} pontos`]);
+                        stage++;
+                    }
                 }
             } else {
-                gameOver();
+                printText(['Game Over!', `${hud.format(score)} pontos`]);
                 clearInterval(loop);
             }
         break;
         case 'Enemy':
             if (bullet.hit(player)) {
+                controller.erase(bullet);
                 if (player.health > 1) {
-                    controller.erase(bullet);
                     player.health--;
                 } else {
-                    player = new Player(playerHealth);
-                    lives--;
+                    // player.explode().then(() => {
+                    //     let oldHealth = player.health;
+                        player = new Player(playerHealth);
+                        // player.health = oldHealth;
+                        lives--;
+                    // });
                 }
             }
             break;
         }
     });
 }
-
-(function play() {
+function addListeners() {
+    if (++count % 5 === 0)
+        enemyCount++;
+    addEventListener('keydown', play);
+    canvas.addEventListener('touchstart', play);
+}
+function removeListeners() {
+    removeEventListener('keydown', play);
+    canvas.removeEventListener('touchstart', play);
+}
+function play() {
+    removeListeners();
+    player = new Player(playerHealth); 
+    enemies = Array.from({length: enemyCount}, () => new Enemy(enemyhealth, enemyPoints));
     loop = setInterval(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         background.draw(ctx);
@@ -76,11 +106,11 @@ function collision(who, enemy = null) {
             collision(enemy);
             collision(player, enemy);
         });
-        hud.update(score, player.health, lives);
-        if (player.health == 0)
-            return true;
+        hud.update(score, stage, player.health, lives);
         addEventListener('keydown', ({code}) => {
-            if (code == 'Space') player.explode();
+            if (code == 'Space') player.dead = true;
         });
     }, 1000 / 60);
-})();
+}
+printText(['Toque para começar:', '(Ou aperte alguma', 'tecla)']);
+// play();

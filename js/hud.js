@@ -8,13 +8,13 @@ export default class Hud {
         this.fullHealth = health;
         this.y = canvas.height - height;
     }
-    update(score, health, lives) {
+    update(score, stage, health, lives) {
         this.score = score;
+        this.stage = stage;
         this.health = health;
         this.lives = lives;
     }
     draw(ctx) {
-        
         ctx.textBaseline = 'middle';
         ctx.font = "15pt 'Press Start 2p'";
 
@@ -39,9 +39,9 @@ export default class Hud {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'left';
         ctx.fillText(`${this.format(this.score)} pts.`, 20, this.y + this.height / 2);
+        ctx.fillText(`${this.stage}ª fase`, 180, this.y + this.height / 2);
         ctx.textAlign = 'right';
         ctx.fillText(`${this.time()}`, canvas.width / 2 - 20, this.y + this.height / 2);
-        ctx.textAlign = 'right';
         ctx.fillText(`${this.lives} vidas`, canvas.width - 20, this.y + this.height / 2);
     }
     format(n) {
@@ -56,6 +56,8 @@ export default class Hud {
                     this.#m++;
                     this.#s = 0;
                 }
+            } else {
+                this.#m = 0;
             }
         }
         return `${this.format(this.#m)}:${this.format(this.#s)}`;
